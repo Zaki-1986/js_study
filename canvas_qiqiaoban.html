@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>  
+<html>  
+<head>  
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script src="http://static.hangame.co.jp/js/fw/jquery/jquery-1.7.2.min.js"></script>
+<title>canvas clock</title>
+<style>
+
+  #countdown {
+    border: 1px solid #ccc;
+  }
+</style>
+
+
+
+</head>  
+<body>  
+  <canvas id="countdown" width='400' height='400'></canvas>
+
+
+<script>
+var canvas = document.getElementById('countdown');
+var ctx = canvas.getContext('2d');
+var rem = canvas.width / 800;
+var tangram = [
+  {line:[{x:0, y:0}, {x:800, y:0}, {x:400, y:400}, {x:0, y:0}], color:"#caff67"},
+  {line:[{x:0, y:0}, {x:400, y:400}, {x:0, y:800}, {x:0, y:0}], color:"#67becf"},
+  {line:[{x:800, y:0}, {x:800, y:400}, {x:600,y:600}, {x:600, y:200}, {x:800, y:0}], color:"#ef3d61"},
+  {line:[{x:600, y:200}, {x:600, y:600}, {x:400, y:400}, {x:600, y:200}], color:"#f9f51a"},
+  {line:[{x:400, y:400}, {x:600, y:600}, {x:400, y:800}, {x:200, y:600}, {x:400, y:400}], color:"#a594c0"},
+  {line:[{x:200, y:600}, {x:400, y:800}, {x:0, y:800}, {x:200, y:600}], color:"#fa8ecc"},
+  {line:[{x:800, y:400}, {x:800, y:800}, {x:400 ,y:800}, {x:800, y:400}], color:"#f6ca29"},
+]
+
+window.onload = function(){
+  for (var i = 0; i < tangram.length; i++) {
+    draw(tangram[i]);
+  }
+}
+
+function draw(price){
+  ctx.beginPath();
+  ctx.moveTo(price.line[0].x * rem, price.line[0].y * rem);
+  for (var i = 0; i < price.line.length; i++) {
+    ctx.lineTo(price.line[i].x * rem, price.line[i].y * rem);
+  }
+
+  ctx.fillStyle = price.color;
+  ctx.fill();
+ 
+  ctx.lineWidth = 3 * rem;
+  ctx.strokeStyle = 'black';
+  ctx.stroke();
+}
+
+
+</script>
+</body>  
+</html> 
