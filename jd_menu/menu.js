@@ -4,11 +4,19 @@ $(document).ready(function () {
   var $activeRow;
   var $activeMenu;
 
+  var timer;
+  var mouseIn = false;
+
+  $JS_popCtn.on('mouseenter', function () {
+    mouseIn = true;
+    console.log('true');
+  }).on('mouseleave', function () {
+    mouseIn = false;
+    console.log('false');
+  });
+
   $('.J_cate')
-    .on('mouseenter', function () {
-      $JS_popCtn.show();
-    })
-    
+
     .on('mouseleave', function () {
       $JS_popCtn.hide();
 
@@ -30,12 +38,21 @@ $(document).ready(function () {
         $activeMenu.show();
       }
 
+      $JS_popCtn.show();
+
+      // timer = setTimeout(function () {
+      //   if (mouseIn) {
+      //     return;
+      //   }
+      // }, 300)
+
       $activeRow.removeClass('cate_menu_item_on');
       $activeMenu.hide();
 
       $activeRow = $(this);
       $activeRow.addClass('cate_menu_item_on');
       $activeMenu = $('#' + 'cate_item' + $activeRow.data('index'));
-      $activeMenu.show();
+      $activeMenu.show();   
+
     })
 })
