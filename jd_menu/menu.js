@@ -40,19 +40,19 @@ $(document).ready(function () {
 
       $JS_popCtn.show();
 
-      // timer = setTimeout(function () {
-      //   if (mouseIn) {
-      //     return;
-      //   }
-      // }, 300)
+      timer = setTimeout(function () {
+        if (mouseIn) {
+          return;
+        } else {
+          $activeRow.removeClass('cate_menu_item_on');
+          $activeMenu.hide();
 
-      $activeRow.removeClass('cate_menu_item_on');
-      $activeMenu.hide();
-
-      $activeRow = $(this);
-      $activeRow.addClass('cate_menu_item_on');
-      $activeMenu = $('#' + 'cate_item' + $activeRow.data('index'));
-      $activeMenu.show();   
+          $activeRow = $(this);
+          $activeRow.addClass('cate_menu_item_on');
+          $activeMenu = $('#' + 'cate_item' + $activeRow.data('index'));
+          $activeMenu.show();
+        }
+      }, 300)
 
     })
 })
