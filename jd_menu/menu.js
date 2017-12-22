@@ -22,18 +22,16 @@ $(document).ready(function () {
 
       if ($activeRow) {
         $activeRow.removeClass('cate_menu_item_on');
-        $activeRow = false;
       }
 
       if ($activeMenu) {
         $activeMenu.hide();
-        $activeMenu = false;
       }
     })
-
-    .on('mouseenter', 'li', function () {
+ 
+    .on('mouseenter', 'li', function (e) {
       if (!$activeRow) {
-        $activeRow = $(this).addClass('cate_menu_item_on');
+        $activeRow = $(e.target).addClass('cate_menu_item_on');
         $activeMenu = $('#' + 'cate_item' + $activeRow.data('index'));
         $activeMenu.show();
       }
@@ -43,15 +41,16 @@ $(document).ready(function () {
       timer = setTimeout(function () {
         if (mouseIn) {
           return;
-        } else {
-          $activeRow.removeClass('cate_menu_item_on');
-          $activeMenu.hide();
+        } 
 
-          $activeRow = $(this);
-          $activeRow.addClass('cate_menu_item_on');
-          $activeMenu = $('#' + 'cate_item' + $activeRow.data('index'));
-          $activeMenu.show();
-        }
+        $activeRow.removeClass('cate_menu_item_on');
+        $activeMenu.hide();
+
+        $activeRow = $(e.target);
+        console.log($activeRow);
+        $activeRow.addClass('cate_menu_item_on');
+        $activeMenu = $('#' + 'cate_item' + $activeRow.data('index'));
+        $activeMenu.show();
       }, 300)
 
     })
