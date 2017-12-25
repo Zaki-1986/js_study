@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>  
+<html>  
+<head>  
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<title>stars</title>
+<style>
+  *{
+    margin:0;
+    padding: 0;
+  }
+
+  .stars {
+    width: 100%;
+    margin: 50px auto;
+    font-size: 0;
+    text-align: center;
+  }
+  .stars_list {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background: gray;
+    border-radius: 15px;
+    margin: 0 3px;
+    cursor: pointer;
+  }
+  .stars_list.on {
+    background: red;
+  }
+
+</style>
+
+</head>  
+<body>
+
+  <ul id='stars1' class="stars">
+    <li class="stars_list" title="很不好"></li>
+    <li class="stars_list" title="不好"></li>
+    <li class="stars_list" title="一般"></li>
+    <li class="stars_list" title="好"></li>
+    <li class="stars_list" title="很好"></li>
+  </ul>
+
+  <!-- <ul id='stars2' class="stars">
+    <li class="stars_list" title="很不好"></li>
+    <li class="stars_list" title="不好"></li>
+    <li class="stars_list" title="一般"></li>
+    <li class="stars_list" title="好"></li>
+    <li class="stars_list" title="很好"></li>
+  </ul> -->
+
+<script>
+
+  var rating = (function(){
+    //点亮整颗
+    var lightEngire = function(el,options){
+      this.$el = $(el);
+      this.$item = this.$el.find('stars_list');
+      this.opts = options;
+    };
+    lightEngire.prototype.init = function(){
+      this.lightOn(this.opts.num);
+      this.bindEvent();
+    };
+    lightEngire.prototype.lightOn = function(num){
+      num = parseInt(num);
+      this.$item.each(function(index){
+        if(index < num) {
+          $(this).addClass('on');
+        }else {
+          $(this).removeClass('on');
+        }
+      });
+    };
+    lightEngire.prototype.bindEvent = function(){
+      var self = this;
+      self.$el.on('mouseover', '.stars_list', function(){
+        self.lightOn($(this).index() + 1);
+      }).on('click', '.stars_list', function(){
+        self.opts.num = $(this).index() + 1;
+      }).on('mouseout', function(){
+        self.lightOn(self.optsopt.num);
+      });
+    };
+
+    //默认参数
+    var defauls = {
+      num:0,
+      readOnly:false,
+      select:function(){},
+      chosen:function(){}
+    };
+
+    //初始化
+    var init = function(el, options){
+      options = $.extend({},defauls,options);
+      new lightEngire(el,options).init();
+    };
+
+    return{
+      init:init
+    };
+  })();
+
+  rating.init('#stars1', {
+    num:2,
+  });
+
+  // // 闭包函数解决命名空间
+  // var rating = (function() {
+
+  //   // 将starsOn放到init外，就可以只声明一次
+  //   var starsOn = function($stars, num){
+  //     $stars.each(function(index){
+  //       if(index < num) {
+  //         $(this).addClass('on');
+  //       }else {
+  //         $(this).removeClass('on');
+  //       }
+  //     });
+  //   };
+
+  //   var init = function(el, num) {
+  //     var $item = $(el),
+  //         $stars = $item.find('li');
+
+  //     starsOn($stars, num);
+
+  //     $item.on('mouseover', '.stars_list', function(){
+  //       starsOn($stars, $(this).index() + 1);
+  //     }).on('click', '.stars_list', function(){
+  //       num = $(this).index() + 1;
+  //     }).on('mouseout', function(){
+  //       starsOn($stars, num);
+  //     });
+  //   };
+
+  //   return {
+  //     init
+  //   };
+
+  // })();
+
+  // // 调用函数的方法
+  // rating.init('#stars1', 2);
+  // rating.init('#stars2', 3);
+  
+</script>
+</body>  
+</html> 

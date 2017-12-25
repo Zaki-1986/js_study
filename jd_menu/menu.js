@@ -29,13 +29,12 @@ $(document).ready(function () {
       }
     })
  
-    .on('mouseenter', 'li', function (e) {
+    .on('mouseenter', 'li', function () {
       if (!$activeRow) {
-        $activeRow = $(e.target).addClass('cate_menu_item_on');
+        $activeRow = $(this).addClass('cate_menu_item_on');
         $activeMenu = $('#' + 'cate_item' + $activeRow.data('index'));
         $activeMenu.show();
       }
-
       $JS_popCtn.show();
 
       timer = setTimeout(function () {
@@ -46,7 +45,7 @@ $(document).ready(function () {
         $activeRow.removeClass('cate_menu_item_on');
         $activeMenu.hide();
 
-        $activeRow = $(e.target);
+        $activeRow = $(this);
         console.log($activeRow);
         $activeRow.addClass('cate_menu_item_on');
         $activeMenu = $('#' + 'cate_item' + $activeRow.data('index'));
