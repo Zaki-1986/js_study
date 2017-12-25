@@ -57,7 +57,8 @@
     //点亮整颗
     var lightEngire = function(el,options){
       this.$el = $(el);
-      this.$item = this.$el.find('stars_list');
+      this.$item = this.$el.find('.stars_list');
+      console.log(this.$item.length);
       this.opts = options;
     };
     lightEngire.prototype.init = function(){
@@ -70,6 +71,7 @@
         if(index < num) {
           $(this).addClass('on');
         }else {
+          console.log(num);
           $(this).removeClass('on');
         }
       });
@@ -81,7 +83,7 @@
       }).on('click', '.stars_list', function(){
         self.opts.num = $(this).index() + 1;
       }).on('mouseout', function(){
-        self.lightOn(self.optsopt.num);
+        self.lightOn(self.opts.num);
       });
     };
 

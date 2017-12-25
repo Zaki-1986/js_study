@@ -9,10 +9,10 @@ $(document).ready(function () {
 
   $JS_popCtn.on('mouseenter', function () {
     mouseIn = true;
-    console.log('true');
+    // console.log('true');
   }).on('mouseleave', function () {
     mouseIn = false;
-    console.log('false');
+    // console.log('false');
   });
 
   $('.J_cate')
@@ -29,9 +29,9 @@ $(document).ready(function () {
       }
     })
  
-    .on('mouseenter', 'li', function () {
+    .on('mouseenter', 'li', function (e) {
       if (!$activeRow) {
-        $activeRow = $(this).addClass('cate_menu_item_on');
+        $activeRow = $(e.currentTarget).addClass('cate_menu_item_on');
         $activeMenu = $('#' + 'cate_item' + $activeRow.data('index'));
         $activeMenu.show();
       }
@@ -45,8 +45,7 @@ $(document).ready(function () {
         $activeRow.removeClass('cate_menu_item_on');
         $activeMenu.hide();
 
-        $activeRow = $(this);
-        console.log($activeRow);
+        $activeRow = $(e.currentTarget);
         $activeRow.addClass('cate_menu_item_on');
         $activeMenu = $('#' + 'cate_item' + $activeRow.data('index'));
         $activeMenu.show();
