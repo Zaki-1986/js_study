@@ -67,7 +67,9 @@
       };
       lightEngire.prototype.init = function () {
         this.lightOn(this.opts.num);
-        this.bindEvent();
+        if (!this.opts.readOnly){
+          this.bindEvent();
+        }
       };
       lightEngire.prototype.lightOn = function (num) {
         num = parseInt(num);
@@ -84,12 +86,14 @@
         var itemLength = self.$item.length;
 
         self.$el.on('mouseover', '.stars_list', function () {
-          num = $(this).index() + 1;
+          var num = $(this).index() + 1;
           self.lightOn(num);
           self.opts.select.call(this, num, itemLength);
+          self.$el.trigger('select', [num, itemLength]);
         }).on('click', '.stars_list', function () {
-          self.opts.num = num;
-          self.opts.chosen.call(this, num, itemLength);
+          self.opts.num = $(this).index() + 1;
+          self.opts.chosen.call(this, self.opts.num, itemLength);
+          self.$el.trigger('chosen', [self.opts.num, itemLength]);
         }).on('mouseout', function () {
           self.lightOn(self.opts.num);
         });
@@ -116,14 +120,20 @@
 
     rating.init('#stars1', {
       num: 2,
-      select: function (num, total) {
-        console.log('当前触碰为：' + num + '/' + total);
-      },
-      chosen: function (num, total) {
-        console.log(this);
-        console.log('当前点击为：' + num + '/' + total);
-      }
+      // select: function (num, total) {
+      //   console.log('当前触碰为：' + num + '/' + total);
+      // },
+      // chosen: function (num, total) {
+      //   console.log(this);
+      //   console.log('当前点击为：' + num + '/' + total);
+      // }
     });
+
+    $('#stars1').on('select', function(e, num, total) {
+      console.log('当前触碰为：' + num + '/' + total);
+    }).on('chosen', function(e, num, total) {
+      console.log('当前点击为：' + num + '/' + total);
+    })
 
     // // 闭包函数解决命名空间
     // var rating = (function() {
