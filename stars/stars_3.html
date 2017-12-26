@@ -19,15 +19,17 @@
   }
   .stars_list {
     display: inline-block;
-    width: 15px;
-    height: 15px;
-    background: gray;
-    border-radius: 15px;
+    width: 37px;
+    height: 35px;
+    background: url('stars.png') top left no-repeat;
     margin: 0 3px;
     cursor: pointer;
   }
   .stars_list.on {
-    background: red;
+    background-position: -41px 0;
+  }
+  .stars_list.half {
+    background-position: -82px 0;
   }
 
 </style>
@@ -58,7 +60,6 @@
     var lightEngire = function(el,options){
       this.$el = $(el);
       this.$item = this.$el.find('.stars_list');
-      console.log(this.$item.length);
       this.opts = options;
     };
     lightEngire.prototype.init = function(){
@@ -71,7 +72,6 @@
         if(index < num) {
           $(this).addClass('on');
         }else {
-          console.log(num);
           $(this).removeClass('on');
         }
       });
@@ -145,7 +145,7 @@
 
   // })();
 
-  // // 调用函数的方法
+  // // 调用函数的方法?
   // rating.init('#stars1', 2);
   // rating.init('#stars2', 3);
   
