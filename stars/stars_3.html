@@ -99,6 +99,60 @@
         });
       };
 
+      //点亮半颗
+      var lightHalf = function (el, options) {
+        this.$el = $(el);
+        this.$item = this.$el.find('.stars_list');
+        this.opts = options;
+        this.add = 1;
+      };
+      lightHalf.prototype.init = function () {
+        this.lightOn(this.opts.num);
+        if (!this.opts.readOnly){
+          this.bindEvent();
+        }
+      };
+      lightHalf.prototype.lightOn = function (num) {
+        var isHalf = parseInt(num) !== num;
+        
+        this.$item.each(function (index) {
+          if (index < parseInt(num)) {
+            $(this).addClass('on');
+            $(this).removeClass('half');
+          } else {
+            $(this).removeClass('on');
+            $(this).removeClass('half');
+          }
+        });
+
+        if(isHalf) {
+          this.$item.eq(parseInt(num)).addClass('half');
+        }
+      };
+      lightHalf.prototype.bindEvent = function () {
+        var self = this;
+        var itemLength = self.$item.length;
+
+        self.$el.on('mousemove', '.stars_list', function (e) {
+          var num = 0;
+          if(e.pageX - $(this).offset().left < $(this).width() / 2){
+            self.add = 0.5;
+          } else {
+            self.add = 1;
+          }
+          num = $(this).index() + self.add;
+          self.lightOn(num);
+          self.opts.select.call(this, num, itemLength);
+          self.$el.trigger('select', [num, itemLength]);
+        }).on('click', '.stars_list', function () {
+          self.opts.num = $(this).index() + self.add;
+          self.opts.chosen.call(this, self.opts.num, itemLength);
+          self.$el.trigger('chosen', [self.opts.num, itemLength]);
+        }).on('mouseout', function () {
+          self.lightOn(self.opts.num);
+        });
+      };
+
       //默认参数
       var defauls = {
         num: 0,
@@ -110,7 +164,8 @@
       //初始化
       var init = function (el, options) {
         options = $.extend({}, defauls, options);
-        new lightEngire(el, options).init();
+        //new lightEngire(el, options).init();
+        new lightHalf(el, options).init();
       };
 
       return {
@@ -119,7 +174,7 @@
     })();
 
     rating.init('#stars1', {
-      num: 2,
+      num: 3.5,
       // select: function (num, total) {
       //   console.log('当前触碰为：' + num + '/' + total);
       // },
